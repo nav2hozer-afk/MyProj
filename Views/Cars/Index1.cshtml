@@ -1,0 +1,35 @@
+﻿@model List<WebApplication1.Models.Car>
+
+	<div style="margin-top: 20px; text-align: center;">
+	<a href="/Cars/Index">На главную</a>
+	</div>
+
+<h2>Поиск по модели авто:</h2>
+<form asp-action="searchCar" method="get">
+	<label>Введите модел автомобиля:</label>
+	<br />
+	<input type="text" name="Model_it" />
+	<button type="submit">Найти автомобиля</button>
+</form> 
+
+
+	<h2>Отображение всех автомобилов в виде таблицы:</h2>
+	<table border="1">
+		<tr>
+			<th>ID</th>
+			<th>Модель</th>
+			<th>Производитель</th>
+			<th>Год</th>
+			<th>Цена</th>
+		</tr>
+	@foreach (var car in Model)
+	{
+		<tr>
+			<td>@car.Id</td>
+			<td>@car.Model</td>
+			<td>@car.Manufacturer</td>
+			<td>@car.Year</td>
+			<td>@car.Price</td>
+		</tr>
+	}
+</table>

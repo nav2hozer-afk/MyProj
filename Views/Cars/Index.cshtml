@@ -1,0 +1,195 @@
+﻿@model List<WebApplication1.Models.ElectroCar>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f5f5f5;
+    }
+
+    /* Контейнер для центрирования */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* Заголовки */
+    h2 {
+        color: #333;
+        border-bottom: 2px solid #4CAF50;
+        padding-bottom: 10px;
+        margin-top: 30px;
+    }
+
+    /* Ссылка */
+    .nav-link {
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 10px;
+        background: #e9ecef;
+        border-radius: 5px;
+    }
+
+        .nav-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            .nav-link a:hover {
+                text-decoration: underline;
+            }
+
+    /* Форма */
+    form {
+        background: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: inline-block;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        padding: 8px;
+        margin: 5px 0 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 300px;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+    /* Таблица */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    td {
+        padding: 10px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #e9ecef;
+    }
+
+    /* Форма изменения заряда в таблице */
+    .inline-form {
+        display: inline-block;
+    }
+
+        .inline-form input {
+            width: 60px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+
+        .inline-form button {
+            background-color: #ff9800;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+            .inline-form button:hover {
+                background-color: #e68900;
+            }
+</style>
+
+<div style="margin-top: 20px; text-align: center;">
+	<a href="/Cars/Index1">К списку машин</a>
+</div>
+
+<h2>Добавить новую машину</h2>
+<form asp-action="addElCars" method="post">
+	<label>Модел автомобиля:</label>
+	<br />
+	<input type="text" name="Model" required />
+	<br />
+	<label>Производитель:</label>
+	<br />
+	<input type="text" name="Manufacturer" required />
+	<br />
+	<label>Год:</label>
+	<br />
+	<input type="number" name="Year"  required />
+	<br />
+	<label>Цена:</label>
+	<br />
+	<input type="number" name="Price"  required />
+	<br />
+	<label>Заряд:</label>
+	<br />
+	<input type="number" name="Battery"   />
+	<br />
+	<button type="submit">Добавить авто</button>
+</form>
+
+
+	<h2>Отображение электромобилов в виде таблицы:</h2>
+	<table border="1">
+		<tr>
+			<th>ID</th>
+			<th>Модель</th>
+			<th>Производитель</th>
+			<th>Год</th>
+			<th>Цена</th>
+			<th>Заряд</th>
+		</tr>
+	@foreach (var electroCar in Model)
+		{
+			<tr>
+			<td>@electroCar.Id</td>
+			<td>@electroCar.Model</td>
+			<td>@electroCar.Manufacturer</td>
+			<td>@electroCar.Year</td>
+			<td>@electroCar.Price</td>
+			<td>@electroCar.Battery</td>
+				<td>
+				<form asp-action="updateBattery" method="post" style="display:inline">
+					<input type="hidden" name="Model" value="@electroCar.Model" />
+					<input type="number" name="newBattery" value="@electroCar.Battery" style="width:40px;" />
+						<button type="submit">Изменить заряд батареи</button>
+					</form>
+				</td>
+			</tr>
+		}
+</table>
